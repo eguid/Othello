@@ -1,8 +1,11 @@
 # Othello
 Othello game（奥赛罗、又叫翻转棋、黑白棋）
 
-##运行游戏
+## 运行游戏
 执行App.main()运行游戏
+
+## 基于
+Based on javafx,graphic Using canvas,support jdk8+
 
 ## 更新计划
 1.x、悔棋、认输(认怂)等，丰富功能操作
