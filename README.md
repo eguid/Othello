@@ -1,5 +1,5 @@
 # Othello
-Othello game（奥赛罗、又叫翻转棋、黑白棋）
+Othello game（奥赛罗棋、又叫翻转棋、黑白棋）
 
 ## 运行游戏
 执行App.main()运行游戏
