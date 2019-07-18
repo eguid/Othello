@@ -1,17 +1,11 @@
 # Othello
-Othello game（奥赛罗棋、又叫翻转棋、黑白棋），自娱作品
+Othello game（奥赛罗棋、又叫翻转棋、黑白棋），自娱自乐作品。用行动证明，要啥自行车，有画布画笔就能做出游戏！
 
 ## 运行游戏
 执行App.main()运行游戏
 
 ## 基于
 Based on javafx,graphic using canvas,support jdk8+
-
-## 更新计划
-1.x、悔棋、认输(认怂)等，丰富功能操作
-2.x、人机对战（机器AI）
-3.x、局域网对战
-4.x、互联网对战
 
 ## 版本更新说明
 
