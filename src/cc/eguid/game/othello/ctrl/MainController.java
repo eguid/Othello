@@ -1,11 +1,15 @@
 package cc.eguid.game.othello.ctrl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import cc.eguid.game.othello.LaunchUtil;
 import cc.eguid.game.othello.data.GameDataCache;
 import cc.eguid.game.othello.data.MainViewData;
-import cc.eguid.game.othello.obj.Chessboard;
-import cc.eguid.game.othello.view.impl.MainView;
-import javafx.application.Application;
-import javafx.scene.paint.Color;
+import cc.eguid.game.othello.scene.MainScene;
 
 /**
  * 主程序控制
@@ -20,6 +24,10 @@ public class MainController {
 	
 	public OthelloAlgorithm othelloAlgorithm;
 	
+	//棋盘宽度，高度，格子数量，格子宽（等于棋子宽），格子高（等于棋子高）
+	Integer width, height,cellSize,cellWidth,cellHeight;
+	//标题
+	String title;
 	public Thread getMainViewThread() {
 		return mainViewThread;
 	}
@@ -29,19 +37,30 @@ public class MainController {
 	 * 
 	 * @return
 	 */
-	public boolean init() {
-		int cellSize=8;
-		int cellPixelSize=80;
-		int width=640,height=640;
-		Chessboard chessboard =new Chessboard(cellSize, cellPixelSize,cellPixelSize,width,height, Color.RED, 1, Color.DARKSEAGREEN);
-		MainViewData mainViewData=new MainViewData("黑白棋", chessboard,1080,640);
-		GameDataCache.addData("MainViewData", mainViewData);
-		int[] startpoint={0,0};
-		othelloAlgorithm = new OthelloAlgorithm(startpoint, cellSize,width,height);
-		GameDataCache.addData("OthelloAlgorithm", othelloAlgorithm);
+	public boolean init(String title,int width,int height,int cellSize) {
+		this.title=title;
+		this.width=width;
+		this.height=height;
+		this.cellSize=cellSize;
+		this.cellWidth=width/cellSize;
+		this.cellHeight=height/cellSize;
+		initCtrl();
+		return true;
+	}
+	
+	private boolean init() {
+		initCtrl();
 		return true;
 	}
 
+	private void initCtrl() {
+		MainViewData mainViewData=new MainViewData(title,width,height,cellSize,cellWidth,cellHeight);
+		GameDataCache.addData("MainViewData", mainViewData);
+		int[] startpoint={0,0};
+		othelloAlgorithm = new OthelloAlgorithm(startpoint, cellSize,width,height,cellWidth,cellHeight);
+		GameDataCache.addData("OthelloAlgorithm", othelloAlgorithm);
+	}
+	
 	/**
 	 * 开始游戏
 	 * 
@@ -63,18 +82,25 @@ public class MainController {
 		//用于启动游戏主程序
 		mainViewThread=new Thread() {
 			public void run() {
-				startPage(MainView.class);
+				Properties prop=new Properties();
+				try {
+					String conf=LaunchUtil.getCuPath()+"conf.properties";
+					System.err.println("配置文件地址："+conf);
+					prop.load(new FileInputStream(new File(conf)));
+					LaunchUtil.launch(MainScene.class,prop);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			};
 		};
 		mainViewThread.setName("游戏主界面");
-	}
-	
-	/**
-	 * 启动页面
-	 * @param appClass
-	 */
-	public static void startPage(Class<? extends Application> appClass) {
-		Application.launch(appClass);
 	}
 
 	/**
@@ -91,7 +117,7 @@ public class MainController {
 
 	public void stop() {
 		if(mainViewThread!=null) {
-			mainViewThread.stop();
+			mainViewThread.interrupt();
 		}
 	}
 	

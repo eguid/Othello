@@ -1,6 +1,7 @@
 package cc.eguid.game.othello.data;
 
 import cc.eguid.game.othello.obj.Chessboard;
+import javafx.scene.paint.Color;
 
 /**
  * 主页面数据
@@ -18,10 +19,10 @@ public class MainViewData {
 		super();
 	}
 
-	public MainViewData(String name, Chessboard chessboard, Integer width, Integer height) {
+	public MainViewData(String name,Integer width, Integer height,int cellSize,int cellWidth,int cellHeight) {
 		super();
 		this.name = name;
-		this.chessboard = chessboard;
+		this.chessboard =new Chessboard(cellSize, cellWidth,cellHeight,cellSize*cellWidth,cellSize*cellHeight, Color.RED, 1, Color.DARKSEAGREEN);
 		this.width = width;
 		this.height = height;
 	}

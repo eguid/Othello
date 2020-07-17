@@ -1,5 +1,6 @@
 package cc.eguid.game.othello.obj;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
@@ -7,7 +8,7 @@ import javafx.scene.paint.Color;
  * @author eguid
  *
  */
-public class Chessboard {
+public class Chessboard implements BaseCanvasDraw{
 
 	int cellSize;//格子数量（长宽相等，9或16）
 	int cellWidth;//每个格子宽
@@ -103,6 +104,49 @@ public class Chessboard {
 				+ ", pixelWidth=" + pixelWidth + ", pixelHeight=" + pixelHeight + ", lineColor=" + lineColor
 				+ ", lineThick=" + lineThick + ", backgroud=" + backgroud + "]";
 	}
+
+	@Override
+	public void draw(GraphicsContext gc) {
+		gc.setLineWidth(getLineThick());
+		//填充棋盘颜色
+		gc.setFill(getBackgroud());
+		int axisNum = getCellSize();
+		gc.fillRect(0, 0, getPixelWidth(), getPixelHeight());
+		gc.setFill(new Color(70.0/255, 70.0/255,70.0/255, 1.0));
+		//绘制棋盘格子
+		for (int i = 0; i <= axisNum; i++) {
+			int[] x1y1 = getXY(0, i);
+			int[] x2y2 = getXY(axisNum, i);
+			gc.strokeLine(x1y1[0], x1y1[1], x2y2[0], x2y2[1]);
+			gc.strokeLine(x1y1[1], x1y1[0], x2y2[1], x2y2[0]);
+		}
+	}
 	
+	/**
+	 * 格子坐标转换为像素坐标
+	 * 
+	 * @param x
+	 *            -格子坐标
+	 * @param y
+	 *            -格子坐标
+	 * @return
+	 */
+	public int[] getXY(int x, int y) {
+		int[] xy = {x * getCellWidth(), y * getCellHeight() };
+		return xy;
+	}
 	
+	/**
+	 * 是否在棋盘边界范围之内
+	 * 
+	 * @return
+	 */
+	public boolean inBounds(int x, int y) {
+		int sumW=getPixelWidth();
+		int sumH=getPixelHeight();
+		if (x<=0 ||x >= sumW || y<= 0|| y >= sumH) {
+			return false;
+		}
+		return true;
+	}
 }

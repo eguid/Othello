@@ -27,11 +27,8 @@ public class OthelloAlgorithm {
 
 	private int maxSize;// 每行最大方格数
 
-	@SuppressWarnings("unused")
-	private int width, height;// 宽高
-
-	@SuppressWarnings("unused")
-	private int[] point;// 起始坐标
+	int chessWidth,chessHeight;//每颗棋子大小
+	int width, height;// 宽高
 
 	private Chess[] aroundChess = null;// 当前棋子的周围8颗棋子
 
@@ -167,12 +164,13 @@ public class OthelloAlgorithm {
 	 * @param width
 	 * @param height
 	 */
-	public OthelloAlgorithm(int[] point, int cellSize, int width, int height) {
+	public OthelloAlgorithm(int[] point, int cellSize, int width, int height,int chessWidth,int chessHeight) {
 		super();
-		this.point = point;
 		this.maxSize = cellSize;
 		this.width = width;
 		this.height = height;
+		this.chessWidth=chessWidth;
+		this.chessHeight=chessHeight;
 		start();
 	}
 
@@ -202,10 +200,10 @@ public class OthelloAlgorithm {
 			for(Chess[] cs:chesss)
 				Arrays.fill(cs, null);
 		}
-		chesss[cellSize/2][cellSize/2]=new Chess(ChessColor.black,cellSize/2,cellSize/2);
-		chesss[cellSize/2][cellSize/2-1]=new Chess(ChessColor.white,cellSize/2,cellSize/2-1);
-		chesss[cellSize/2-1][cellSize/2-1]=new Chess(ChessColor.black,cellSize/2-1,cellSize/2-1);
-		chesss[cellSize/2-1][cellSize/2]=new Chess(ChessColor.white,cellSize/2-1,cellSize/2);
+		chesss[cellSize/2][cellSize/2]=new Chess(ChessColor.black,cellSize/2,cellSize/2,chessWidth,chessHeight);
+		chesss[cellSize/2][cellSize/2-1]=new Chess(ChessColor.white,cellSize/2,cellSize/2-1,chessWidth,chessHeight);
+		chesss[cellSize/2-1][cellSize/2-1]=new Chess(ChessColor.black,cellSize/2-1,cellSize/2-1,chessWidth,chessHeight);
+		chesss[cellSize/2-1][cellSize/2]=new Chess(ChessColor.white,cellSize/2-1,cellSize/2,chessWidth,chessHeight);
 	}
 	
 	// 重置当前棋子周围四个方向标识
@@ -354,6 +352,7 @@ public class OthelloAlgorithm {
 				}
 			}
 		}
+		log.info("可落子数量："+dropSize);
 		canDropSize=canDropChessList.size();
 		return canDropSize;
 	}
@@ -592,7 +591,7 @@ public class OthelloAlgorithm {
 	
 	//创建可落子位置标注
 	private Chess createMarker(int x,int y) {
-		return new Chess(ChessColor.marker,x,y);
+		return new Chess(ChessColor.marker,x,y,chessWidth,chessHeight);
 	}
 	
 	/*计算翻转棋子算法*/
@@ -615,7 +614,7 @@ public class OthelloAlgorithm {
 //			log.info("检测到的数量：" + num);
 			if (num > 0) {// 检测周围四条直线，八个方向有无对方棋子
 				log.info("周围有棋子");
-				lastChess=new Chess(cuColor,xnum,ynum);
+				lastChess=new Chess(cuColor,xnum,ynum,chessWidth,chessHeight);
 				List<Chess> list = findLineChess(lastChess);
 				return list;
 			} else {
