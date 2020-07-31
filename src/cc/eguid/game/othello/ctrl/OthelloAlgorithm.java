@@ -83,12 +83,24 @@ public class OthelloAlgorithm {
 		this.currentBlackChessNum = currentBlackChessNum;
 	}
 
+	/**
+	 * 获取当前可落子位置数量
+	 * @return
+	 */
 	public int getCanDropSize() {
 		return canDropSize;
 	}
 
 	public void setCanDropChessList(Map<String, Chess> canDropChessList) {
 		this.canDropChessList = canDropChessList;
+	}
+	
+	/**
+	 * 获得当前可落子位置的棋子
+	 * @return
+	 */
+	public Collection<Chess> getCanDropChessList() {
+		return canDropChessList.values();
 	}
 
 	/**
@@ -316,7 +328,7 @@ public class OthelloAlgorithm {
 
 	/*计算落子位置算法*/
 	/**
-	 * 预测下一步棋子的可落子位置
+	 * 预获得下一步棋子的可落子位置
 	 * @param color-当前棋子颜色
 	 * @return
 	 */
@@ -331,8 +343,6 @@ public class OthelloAlgorithm {
 				isOver=true;//游戏结束，双方都不能落子
 			}
 		}
-		log.info("可落子位置数量："+canDropSize);
-		log.info(canDropChessList.toString());
 		return canDropChessList.values();
 	}
 	
@@ -609,22 +619,16 @@ public class OthelloAlgorithm {
 		log.info("当前落子位置序号：" + xnum + "," + ynum);
 		// 先检测当前位置是否被占用，如果没有，返回空
 		if (!hasChess(xnum, ynum)) {
-//			log.info("未占用其他棋子位置，查找周围棋子");
 			int num = findAroundHasChess(xnum, ynum);
-//			log.info("检测到的数量：" + num);
 			if (num > 0) {// 检测周围四条直线，八个方向有无对方棋子
-				log.info("周围有棋子");
 				lastChess=new Chess(cuColor,xnum,ynum,chessWidth,chessHeight);
 				List<Chess> list = findLineChess(lastChess);
 				return list;
 			} else {
-				log.info("没有棋子，不能落子");
 				return null;
 			}
-		} else {
-			log.info("有棋子了");
-		}
-		// 查找需要翻转的棋子，并返回，即可
+		} 
+		//没有可落子位置
 		return null;
 	}
 	
@@ -703,12 +707,10 @@ public class OthelloAlgorithm {
 	 * @return -1：
 	 */
 	private int findBreak(int x, int y, ChessColor color) {
-		log.info("方向数组：" + x + ":" + y);
 		if(x<0||x>=maxSize||y<0||y>=maxSize) {
 			return 2;
 		}
 		Chess temp = chesss[x][y];
-//		log.info("方向：" + temp);
 		if (temp == null) {// 中间有空格，不满足翻转需求
 			lineReverseChess.clear();
 			return 2;
