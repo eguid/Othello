@@ -196,7 +196,7 @@ public class OthelloAlgorithm {
 		currentChessNum=4;//当前棋子数量，初始有四枚棋子
 		cuColor=ChessColor.black;//黑棋先手
 		initChess(maxSize);
-		aroundChess = new Chess[maxSize];// 当前棋子的周围8颗棋子
+		aroundChess = new Chess[8];// 当前棋子的周围8颗棋子
 		reverseChess = new ArrayList<Chess>(maxSize * maxSize);// 可翻转的棋子
 		lineReverseChess = new ArrayList<Chess>(maxSize);// 一条直线上可翻转的棋子
 	}

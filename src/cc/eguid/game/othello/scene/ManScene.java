@@ -74,9 +74,9 @@ public class ManScene extends ViewTemplate {
 		MainViewData data = GameDataCache.getData("MainViewData");
 		othelloAlgorithm = data.getOthelloAlgorithm();
 		chessboard = data.getChessboard();
-		String dropChess = "file:/" + LaunchUtil.getCuPath() + GameDataCache.getData("dropChess");
-		String background = "file:/" + LaunchUtil.getCuPath() + GameDataCache.getData("background");
-		String win = "file:/" + LaunchUtil.getCuPath() + GameDataCache.getData("win");
+		String dropChess = "file://" + LaunchUtil.getCuPath() + GameDataCache.getData("dropChess");
+		String background = "file://" + LaunchUtil.getCuPath() + GameDataCache.getData("background");
+		String win = "file://" + LaunchUtil.getCuPath() + GameDataCache.getData("win");
 
 		log.info("背景音乐：" + background + "，下棋音效：" + dropChess + "，胜利音效：" + win);
 

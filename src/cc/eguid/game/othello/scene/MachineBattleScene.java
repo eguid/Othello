@@ -89,9 +89,9 @@ public class MachineBattleScene extends ViewTemplate {
 		MainViewData data = GameDataCache.getData("MainViewData");
 		othelloAlgorithm = data.getOthelloAlgorithm();
 		chessboard = data.getChessboard();
-		String dropChess = "file:/" + LaunchUtil.getCuPath() + GameDataCache.getData("dropChess");
-		String background = "file:/" + LaunchUtil.getCuPath() + GameDataCache.getData("background");
-		String win = "file:/" + LaunchUtil.getCuPath() + GameDataCache.getData("win");
+		String dropChess = "file://" + LaunchUtil.getCuPath() + GameDataCache.getData("dropChess");
+		String background = "file://" + LaunchUtil.getCuPath() + GameDataCache.getData("background");
+		String win = "file://" + LaunchUtil.getCuPath() + GameDataCache.getData("win");
 
 		mac=new MachineAiCaculate(othelloAlgorithm);
 		rac=new RandomMachineAiCaculate(othelloAlgorithm);

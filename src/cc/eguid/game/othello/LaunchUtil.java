@@ -151,7 +151,7 @@ public class LaunchUtil {
 	}
 	
 	public static String getCuPathParam(Application app,String key) {
-		return "file:/"+ getCuPath()+getParam(app,key);
+		return "file://"+ getCuPath()+getParam(app,key);
 	}
 	
 	public static String getCuPath() {
