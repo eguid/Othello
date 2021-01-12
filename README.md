@@ -8,6 +8,11 @@ Othello game（奥赛罗棋、又叫翻转棋、黑白棋），自娱自乐作�
 Based on javafx,graphic using canvas,support jdk8+
 
 ## 版本更新说明
+
+1.3.4版本更新
+1、修复aroundChess的size溢出问题
+2、支持mac
+
 1.3.3版本更新
 1、优化代码结构，去除主控制器，不再需要这个类
 2、优化切换窗口逻辑
